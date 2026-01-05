@@ -1,0 +1,115 @@
+COURS DE GESTION INTÉGRÉE - UNIVERSITÉ DE MADAGASCAR
+Module : Systèmes d'Information pour la Grande Entreprise
+
+DOCUMENT : CAHIER DES CHARGES - APPLICATION ACHATS/VENTES/STOCK
+
+I. CONTEXTE MALGACHE (Problématique)
+
+À Madagascar, les grandes entreprises (comme Tiko, Shoprite, ou les groupes miniers) 
+gèrent souvent leurs stocks avec :
+- Des fichiers Excel séparés par service
+- Des emails pour les commandes
+- Des systèmes partiels non connectés
+
+EXEMPLE : Une entreprise de distribution à Antananarivo a :
+- Le service achats qui commande chez les fournisseurs (riz, produits de base)
+- Le magasin qui reçoit les marchandises
+- La vente qui facture les clients (supermarchés, détaillants)
+Mais personne ne sait exactement ce qu'il reste en stock réellement.
+
+RISQUES SPÉCIFIQUES À MADAGASCAR :
+1. Rupture de stock sur les produits essentiels (farine, sucre, huile)
+2. Surstock de produits périssables (lait, produits frais)
+3. Pertes par vol ou mauvaise gestion
+4. Erreurs dans les prix d'achat (fluctuation Ariary/USD)
+
+II. OBJECTIFS DU SYSTÈME
+
+Le système doit fonctionner comme un "cerveau unique" qui connecte tous les services.
+
+EXEMPLE CONCRET : 
+- Un commerçant de la Rue Indira Gandhi commande 100 sacs de riz
+- Le système réserve automatiquement le stock
+- Le magasinier prépare la livraison
+- La comptabilité émet la facture
+Tout est tracé : qui a fait quoi, quand, et pourquoi.
+
+III. GOUVERNANCE ET SÉCURITÉ (Adaptation au contexte malgache)
+
+PRINCIPE FONDAMENTAL : En gestion malgache, on dit "Ny mpandray anjara tsirairay 
+dia manana andraikitra voafaritra" (Chaque participant a des responsabilités définies)
+
+EXEMPLES DE RÔLES ADAPTÉS :
+1. MAGASINIER (Antananarivo) :
+   - Peut enregistrer l'arrivée des conteneurs au port de Toamasina
+   - Mais NE PEUT PAS modifier le prix d'achat du riz importé
+
+2. COMMERCIAL (Fianarantsoa) :
+   - Peut faire un devis pour un hôtel de Nosy Be
+   - Mais NE PEUT PAS accorder 30% de remise sans l'accord du responsable
+
+3. ACHETEUR (Majunga) :
+   - Peut commander du matériel de pêche
+   - Mais NE PEUT PAS approuver sa propre commande
+
+IMPORTANT : Système de double validation pour éviter les fraudes fréquentes dans 
+les grandes entreprises malgaches (ex : surfacturation, détournement de marchandises)
+
+IV. GESTION DES STOCKS (Aspects pratiques)
+
+PROBLÈME MALGACHE : Beaucoup d'entreprises perdent de l'argent sur :
+- Produits qui périment (lait, médicaments)
+- Vol dans les entrepôts
+- Erreurs d'inventaire
+
+SOLUTION DU SYSTÈME :
+1. GESTION DES LOTS : Chaque sac de riz, chaque carton de médicament a un numéro
+   Exemple : Lot RIZ-2024-001 (Date d'importation : 15/01/2024)
+
+2. ALERTE PÉREMPTION : Le système bloque automatiquement la vente de produits 
+   dont la DLC (Date Limite de Consommation) est dépassée
+
+3. INVENTAIRE TOURNANT : Plutôt que de tout compter une fois par an (ce qui 
+   paralyse l'entreprise), on compte quelques articles chaque jour
+
+V. INDICATEURS DE PERFORMANCE (KPI) pour Madagascar
+
+POUR LA DIRECTION (Antananarivo) :
+- "Fahatongavan'ny varotra" (Chiffre d'affaires) par région
+- "Ny hafa" (Marge) sur les produits locaux vs importés
+- "Ny fihodinana" (Rotation) des stocks de riz
+
+POUR LE MAGASIN (Toamasina) :
+- "Ny marina" (Précision) entre stock théorique et physique
+- "Ny fahaverezana" (Pertes) par vol ou casse
+- "Ny faharetan'ny" (Délai) entre réception et mise en rayon
+
+POUR LES VENTES (Nosy Be) :
+- "Ny fahatarana" (Retards) de livraison aux hôtels
+- "Ny fampihenana" (Remises) accordées aux gros clients
+- "Ny fiverenana" (Retours) de marchandises
+
+VI. AVANTAGES POUR LES ENTREPRISES MALGACHES
+
+1. TRAÇABILITÉ : Savoir exactement d'où vient chaque produit (important pour 
+   l'exportation vanille, girofle, litchi)
+
+2. CONTRÔLE DES COÛTS : Suivre l'évolution des prix en Ariary et en devises
+
+3. CONFORMITÉ : Être prêt pour les audits des bailleurs de fonds ou des 
+   partenaires internationaux
+
+4. DÉCISION ÉCLAIRÉE : Les managers peuvent prendre des décisions basées sur 
+   des données réelles, pas sur des "sentiments"
+
+CONCLUSION PÉDAGOGIQUE :
+
+Ce système n'est pas juste un logiciel - c'est une nouvelle façon de travailler.
+Comme on dit à Madagascar : "Ny rano tsy mba bira ifampidirana" (L'eau ne se 
+mélange pas sans être remuée) - il faut remuer les habitudes pour avoir une 
+gestion moderne et efficace.
+
+Pour les étudiants en informatique : vous voyez ici comment la technique 
+(programmation, bases de données) sert le métier (gestion d'entreprise).
+Votre défi : créer un système qui comprend à la fois la technologie ET la réalité 
+des entreprises malgaches.
