@@ -1,5 +1,7 @@
 # Cahier des charges — Application Web intégrée Achats / Ventes / Stock / Inventaires
 
+> **Note importante** : Ce document constitue un modèle complet de cahier des charges pour une application web de gestion intégrée. Les sections marquées [À définir] sont des emplacements réservés qui devront être renseignés avec les données spécifiques de votre entreprise lors de l'initialisation du projet.
+
 ## 1. Problématique et objectifs
 
 ### 1.1 Contexte
@@ -199,10 +201,10 @@ Comment centraliser et automatiser la gestion des achats, ventes, stocks et inve
 - Formation des utilisateurs et des administrateurs prévue
 
 ### 3.5 Contraintes budgétaires et planning
-- Budget alloué au projet : [À définir]
-- Délai de mise en œuvre : [À définir]
+- Budget alloué au projet : [À définir selon l'analyse détaillée des besoins]
+- Délai de mise en œuvre : [À définir après étude de faisabilité - estimation 12 à 18 mois]
 - Phases de déploiement : Pilote puis généralisation
-- ROI attendu : [À définir selon objectifs]
+- ROI attendu : [À définir selon objectifs - cible : récupération investissement en 2-3 ans]
 
 ## 4. Gouvernance, rôles et gestion des accès
 
@@ -712,5 +714,7 @@ Comment centraliser et automatiser la gestion des achats, ventes, stocks et inve
 ### 5.3 Historique des versions
 | Version | Date | Auteur | Description |
 |---------|------|--------|-------------|
-| 1.0 | [Date] | [Auteur] | Version initiale du cahier des charges |
+| 1.0 | 2026-01-05 | Équipe Projet | Version initiale du cahier des charges |
+
+*Note : Ce document est un template/modèle de cahier des charges. Les sections marquées [À définir] devront être complétées lors de la phase d'initialisation du projet avec les informations spécifiques à l'entreprise.*
 
