@@ -1,0 +1,35 @@
+12/01/26
+Autres objectifs:
+	controle interne:separation de taches ou validations
+	reduction de delai et erreur%mvt
+
+
+Achat: 	verifier ra mbola ao anaty stock le entana,=> rhf tss ao anaty stock le zvt vidina de lasa le service 	magasinier mangataka proforma(facture future) any amn fournisseur=> ze mois disant no Alaina zany hoe le 	mora indrindra=>approbation rht(presente-na any @ finance pour dire hoe misy fikasana hividy zvt zay lazaina 	ny valeur-ny mba ahafantarana hoe hanana ny vola)=>raha valider par le finance, bon de commande omena any 	amn fournisseur *apetraka o mle bdc ny ref an proforma*=> rhf etablit le bon de commande de asina soniavinle 	signataire(DG ou adjoint,DAF)=mamoka bon de livraison(signe par le magasinier) ny fournisseur=>de mamoka bon 	de reception ny magasinier anle societe(signe par le livreur)=>facture de payer donc le achat
+
+Vente= f-1 achat
+	=>check ao amn stock=>demande de proforma(misy validite hoe hatram ovina le entana no dispo)=>bon de 	commande=>preparer entana=>bon de livraison,facture paye
+
+Stock: numero: lot,serie,emplacement,reservation(raha deja commande le entanana donc reserve)
+
+Iventaire: magasinier tsy afaka manao enregistrement stock=> tsy votery misy resaka tournant annuel ou mensuel
+
+
+!Contrainte= multi-site(toerana be de be)=/ multi=depot=depot dans des diff endroits mais vente et achats dans un mm endroit
+	multi-entite: orinasa maro2 fa afaka manao transfert stock ou mnn stock erahana
+
+regle de gestion de role
+
+Acces temporaire
+
+VALIDATION DE STOCK (gestion de Valeur):
+Permanence des methodes
+les stocks de FIFO sont les dernieres entree
+les stocks de LIFO sont les premiers entree
+les stocks de FEFO sont les dernieres entree
+
+1-CMUP(cout moyen uitaire pondere)                            2-FIFO(PEPS)                                3-LIFO(DEPS)	
+
+
+mvt retro-dater et gelle de coup tsy atao 
+
+prix de vente:definisser manokana 
