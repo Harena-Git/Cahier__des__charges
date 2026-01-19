@@ -51,6 +51,20 @@ Responsable **cohérence globale**, sécurité et intégration.
 * Affectation utilisateur ↔ site ↔ dépôt
 * Séparation des tâches (règles métier)
 
+### Table 
+* utilisateur
+* role
+* permission
+* role_permission
+* delegation_temporaire
+* module
+* fonctionnalite
+
+### Table liées
+* site
+* depot
+* utilisateur_depot
+
 ### 📄 Pages à développer
 
 * Connexion / Déconnexion
@@ -88,6 +102,25 @@ Responsable de la **qualité des données**.
 * Devises
 * Méthodes de gestion (FIFO, CMUP…)
 
+### Table 
+* societe
+* site
+* depot
+* emplacement
+* article
+* categorie_article
+* unite_mesure
+* fournisseur
+* client
+* type_client
+* devise
+* methode_gestion
+* mode_paiement
+
+### Table liées (consultées par d’autres modules)
+* tarif
+* regle_remise
+
 ### 📄 Pages à développer
 
 * Gestion articles
@@ -122,6 +155,22 @@ Responsable du **processus d’achat complet**.
 * Génération bon de commande
 * Suivi réception
 * Facture fournisseur
+
+### Table 
+* demande_achat
+* ligne_demande_achat
+* proforma_fournisseur
+* ligne_proforma_fournisseur
+* bon_commande
+* ligne_bon_commande
+* facture_fournisseur
+* paiement_fournisseur
+
+### Tables liées (lecture)
+* fournisseur
+* article
+* site
+* devise
 
 ### 📄 Pages à développer
 
@@ -159,6 +208,24 @@ Responsable du **noyau technique du projet**.
 * Inventaire ponctuel
 * Ajustement (avec validation)
 
+### Table 
+* mouvement_stock
+* type_mouvement
+* lot
+* emplacement_stock
+* transfert_inter_depot
+* ligne_transfert
+* reservation_stock
+* inventaire_physique
+* ligne_inventaire
+* ajustement_stock
+
+### Tables liées (lecture)
+* article
+* depot
+* emplacement
+* utilisateur
+
 ### 📄 Pages à développer
 
 * État de stock
@@ -192,6 +259,24 @@ Responsable du **cycle de vente et des flux financiers**.
 * Facture client
 * Encaissement
 * Suivi paiements
+
+### Table 
+* proforma_client
+* ligne_proforma_client
+* commande_client
+* ligne_commande_client
+* bon_livraison
+* ligne_bon_livraison
+* facture_client
+* encaissement_client
+* acompte
+
+### Tables liées (lecture)
+* client
+* article
+* devise
+* mode_paiement
+* reservation_stock (interaction avec Stock)
 
 ### 📄 Pages à développer
 
