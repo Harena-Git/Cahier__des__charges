@@ -1,6 +1,3 @@
-Très bien.
-Je vais raisonner **comme un enseignant de gestion / chef de projet**, avec une **répartition équitable**, **cohérente pédagogiquement**, et **réaliste techniquement** pour un projet web *Gestion Stock–Vente–Achat*.
-
 Objectif de la répartition :
 
 * ✔ Charge équilibrée
