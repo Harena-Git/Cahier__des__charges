@@ -1,209 +1,293 @@
--- 1️⃣ ADMINISTRATION & GESTION DES ACCÈS
+/* =========================================================
+   BASE DE DONNÉES : COMBIEN
+   SOURCE : liste-entités.sql (fourni par l'utilisateur)
+   SGBD  : PostgreSQL
+========================================================= */
+
+CREATE DATABASE combien_db;
+\c combien_db;
+
+/* =========================================================
+   1. RÉFÉRENTIELS TRANSVERSES
+========================================================= */
+
+CREATE TABLE profil_utilisateur (
+    id SERIAL PRIMARY KEY,
+    code VARCHAR(50) NOT NULL UNIQUE,
+    nom VARCHAR(100) NOT NULL,
+    niveau_hierarchique SMALLINT NOT NULL
+);
+
+CREATE TABLE ville (
+    id SERIAL PRIMARY KEY,
+    nom VARCHAR(100) NOT NULL UNIQUE
+);
+
+CREATE TABLE devise (
+    id SERIAL PRIMARY KEY,
+    code VARCHAR(10) NOT NULL UNIQUE,
+    nom VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE mode_paiement (
+    id SERIAL PRIMARY KEY,
+    code VARCHAR(20) NOT NULL UNIQUE,
+    nom VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE methode_gestion (
+    id SERIAL PRIMARY KEY,
+    code VARCHAR(10) NOT NULL UNIQUE -- FIFO, CUMP, FEFO, LIFO
+);
+
+/* =========================================================
+   2. STRUCTURE ORGANISATIONNELLE
+========================================================= */
+
 CREATE TABLE societe (
-    id BIGSERIAL PRIMARY KEY,
-    raison_sociale VARCHAR(255) NOT NULL,
-    code VARCHAR(50) UNIQUE NOT NULL,
+    id SERIAL PRIMARY KEY,
+    raison_sociale VARCHAR(150) NOT NULL,
+    code VARCHAR(20) NOT NULL UNIQUE,
     adresse TEXT,
     ville VARCHAR(100)
 );
 
 CREATE TABLE site (
-    id BIGSERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     nom VARCHAR(100) NOT NULL,
-    code VARCHAR(50) UNIQUE NOT NULL,
+    code VARCHAR(20) NOT NULL UNIQUE,
     adresse TEXT,
     ville VARCHAR(100),
-    societe_id BIGINT REFERENCES societe(id)
+    societe_id INT NOT NULL REFERENCES societe(id)
 );
 
+CREATE TABLE depot (
+    id SERIAL PRIMARY KEY,
+    nom VARCHAR(100) NOT NULL,
+    code VARCHAR(20) NOT NULL UNIQUE,
+    site_id INT NOT NULL REFERENCES site(id)
+);
+
+CREATE TABLE emplacement (
+    id SERIAL PRIMARY KEY,
+    code VARCHAR(50) NOT NULL,
+    depot_id INT NOT NULL REFERENCES depot(id)
+);
+
+/* =========================================================
+   3. SÉCURITÉ & GESTION DES ACCÈS
+========================================================= */
+
 CREATE TABLE utilisateur (
-    id BIGSERIAL PRIMARY KEY,
-    email VARCHAR(150) UNIQUE NOT NULL,
+    id SERIAL PRIMARY KEY,
+    email VARCHAR(150) NOT NULL UNIQUE,
     nom VARCHAR(100),
     prenom VARCHAR(100),
-    telephone VARCHAR(30),
-    site_id BIGINT REFERENCES site(id)
+    telephone VARCHAR(50),
+    site_id INT REFERENCES site(id)
 );
 
 CREATE TABLE role (
-    id BIGSERIAL PRIMARY KEY,
-    code VARCHAR(50) UNIQUE NOT NULL,
+    id SERIAL PRIMARY KEY,
+    code VARCHAR(50) NOT NULL UNIQUE,
     nom VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE module (
-    id BIGSERIAL PRIMARY KEY,
-    code VARCHAR(50) UNIQUE NOT NULL,
+    id SERIAL PRIMARY KEY,
+    code VARCHAR(50) NOT NULL UNIQUE,
     nom VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE fonctionnalite (
-    id BIGSERIAL PRIMARY KEY,
-    module_id BIGINT REFERENCES module(id),
-    code VARCHAR(100) UNIQUE NOT NULL,
+    id SERIAL PRIMARY KEY,
+    module_id INT NOT NULL REFERENCES module(id),
+    code VARCHAR(100) NOT NULL,
     nom VARCHAR(150) NOT NULL
 );
 
 CREATE TABLE permission (
-    id BIGSERIAL PRIMARY KEY,
-    fonctionnalite_id BIGINT REFERENCES fonctionnalite(id),
-    code VARCHAR(100) UNIQUE NOT NULL,
+    id SERIAL PRIMARY KEY,
+    fonctionnalite_id INT NOT NULL REFERENCES fonctionnalite(id),
+    code VARCHAR(100) NOT NULL,
     nom VARCHAR(150) NOT NULL
 );
 
 CREATE TABLE role_permission (
-    id BIGSERIAL PRIMARY KEY,
-    role_id BIGINT REFERENCES role(id),
-    permission_id BIGINT REFERENCES permission(id)
-);
-
-CREATE TABLE delegation_temporaire (
-    id BIGSERIAL PRIMARY KEY,
-    delegant_user_id BIGINT REFERENCES utilisateur(id),
-    delegataire_user_id BIGINT REFERENCES utilisateur(id),
-    role_id BIGINT REFERENCES role(id),
-    date_debut DATE,
-    date_fin DATE
-);
-
-CREATE TABLE depot (
-    id BIGSERIAL PRIMARY KEY,
-    nom VARCHAR(100),
-    code VARCHAR(50) UNIQUE,
-    site_id BIGINT REFERENCES site(id)
+    id SERIAL PRIMARY KEY,
+    role_id INT NOT NULL REFERENCES role(id),
+    permission_id INT NOT NULL REFERENCES permission(id),
+    UNIQUE (role_id, permission_id)
 );
 
 CREATE TABLE utilisateur_depot (
-    id BIGSERIAL PRIMARY KEY,
-    utilisateur_id BIGINT REFERENCES utilisateur(id),
-    depot_id BIGINT REFERENCES depot(id),
-    role_id BIGINT REFERENCES role(id)
+    id SERIAL PRIMARY KEY,
+    utilisateur_id INT NOT NULL REFERENCES utilisateur(id),
+    depot_id INT NOT NULL REFERENCES depot(id),
+    role_id INT NOT NULL REFERENCES role(id)
 );
 
-CREATE TABLE emplacement (
-    id BIGSERIAL PRIMARY KEY,
-    code VARCHAR(50) NOT NULL,
-    depot_id BIGINT REFERENCES depot(id)
+CREATE TABLE delegation_temporaire (
+    id SERIAL PRIMARY KEY,
+    delegant_user_id INT NOT NULL REFERENCES utilisateur(id),
+    delegataire_user_id INT NOT NULL REFERENCES utilisateur(id),
+    role_id INT REFERENCES role(id),
+    date_debut DATE NOT NULL,
+    date_fin DATE NOT NULL
 );
 
--- 2️⃣ RÉFÉRENTIELS (MASTERS)
-CREATE TABLE methode_gestion (
-    id BIGSERIAL PRIMARY KEY,
-    code VARCHAR(20) UNIQUE NOT NULL
+/* =========================================================
+   4. RÉFÉRENTIELS MÉTIER
+========================================================= */
+
+CREATE TABLE unite_mesure (
+    id SERIAL PRIMARY KEY,
+    code VARCHAR(20) NOT NULL UNIQUE,
+    nom VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE categorie_article (
-    id BIGSERIAL PRIMARY KEY,
-    code VARCHAR(50) UNIQUE NOT NULL,
-    nom VARCHAR(100),
-    methode_gestion_id BIGINT REFERENCES methode_gestion(id)
-);
-
-CREATE TABLE unite_mesure (
-    id BIGSERIAL PRIMARY KEY,
-    code VARCHAR(20) UNIQUE NOT NULL,
-    nom VARCHAR(50)
+    id SERIAL PRIMARY KEY,
+    code VARCHAR(50) NOT NULL UNIQUE,
+    nom VARCHAR(100) NOT NULL,
+    methode_gestion_id INT REFERENCES methode_gestion(id)
 );
 
 CREATE TABLE article (
-    id BIGSERIAL PRIMARY KEY,
-    reference VARCHAR(100) UNIQUE NOT NULL,
-    designation VARCHAR(255),
+    id SERIAL PRIMARY KEY,
+    reference VARCHAR(100) NOT NULL UNIQUE,
+    designation VARCHAR(150) NOT NULL,
     description TEXT,
-    categorie_article_id BIGINT REFERENCES categorie_article(id),
-    unite_mesure_stock_id BIGINT REFERENCES unite_mesure(id),
-    unite_mesure_achat_id BIGINT REFERENCES unite_mesure(id),
-    unite_mesure_vente_id BIGINT REFERENCES unite_mesure(id),
+    categorie_article_id INT REFERENCES categorie_article(id),
+    unite_mesure_stock_id INT REFERENCES unite_mesure(id),
+    unite_mesure_achat_id INT REFERENCES unite_mesure(id),
+    unite_mesure_vente_id INT REFERENCES unite_mesure(id),
     est_actif BOOLEAN DEFAULT TRUE
 );
 
-CREATE TABLE devise (
-    id BIGSERIAL PRIMARY KEY,
-    code VARCHAR(10) UNIQUE NOT NULL,
-    nom VARCHAR(50)
+CREATE TABLE type_client (
+    id SERIAL PRIMARY KEY,
+    nom VARCHAR(100) NOT NULL
 );
 
-CREATE TABLE type_client (
-    id BIGSERIAL PRIMARY KEY,
-    nom VARCHAR(100)
+CREATE TABLE client (
+    id SERIAL PRIMARY KEY,
+    typeclient_id INT REFERENCES type_client(id),
+    raison_sociale VARCHAR(150) NOT NULL,
+    telephone VARCHAR(50),
+    email VARCHAR(150)
+);
+
+CREATE TABLE fournisseur (
+    id SERIAL PRIMARY KEY,
+    raison_sociale VARCHAR(150) NOT NULL,
+    nif_stat VARCHAR(50),
+    telephone VARCHAR(50)
 );
 
 CREATE TABLE tarif (
-    id BIGSERIAL PRIMARY KEY,
-    article_id BIGINT REFERENCES article(id),
-    typeclient_id BIGINT REFERENCES type_client(id),
-    site_id BIGINT REFERENCES site(id),
-    prix NUMERIC(15,2),
-    devise_id BIGINT REFERENCES devise(id),
-    date_debut DATE,
+    id SERIAL PRIMARY KEY,
+    article_id INT NOT NULL REFERENCES article(id),
+    typeclient_id INT REFERENCES type_client(id),
+    site_id INT REFERENCES site(id),
+    prix NUMERIC(15,2) NOT NULL,
+    devise_id INT REFERENCES devise(id),
+    date_debut DATE NOT NULL,
     date_fin DATE
 );
 
--- 3️⃣ ACHATS (EXTRAIT CLÉ)
-CREATE TABLE fournisseur (
-    id BIGSERIAL PRIMARY KEY,
-    raison_sociale VARCHAR(255),
-    nif_stat VARCHAR(100),
-    telephone VARCHAR(30)
+/* =========================================================
+   5. ACHATS
+========================================================= */
+
+CREATE TABLE departement (
+    id SERIAL PRIMARY KEY,
+    nom VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE demande_achat (
-    id BIGSERIAL PRIMARY KEY,
-    numero_da VARCHAR(50) UNIQUE NOT NULL,
-    date_demande DATE,
-    departement_id BIGINT,
-    site_id BIGINT REFERENCES site(id),
-    status VARCHAR(50)
+    id SERIAL PRIMARY KEY,
+    numero_da VARCHAR(50) NOT NULL UNIQUE,
+    date_demande DATE NOT NULL,
+    departement_id INT REFERENCES departement(id),
+    site_id INT REFERENCES site(id),
+    status VARCHAR(30) NOT NULL
 );
 
 CREATE TABLE ligne_demande_achat (
-    id BIGSERIAL PRIMARY KEY,
-    demande_achat_id BIGINT REFERENCES demande_achat(id),
-    article_id BIGINT REFERENCES article(id),
-    designation TEXT,
-    quantite NUMERIC(15,2)
+    id SERIAL PRIMARY KEY,
+    demande_achat_id INT REFERENCES demande_achat(id),
+    article_id INT REFERENCES article(id),
+    designation VARCHAR(150),
+    quantite NUMERIC(15,2) NOT NULL
 );
 
--- 4️⃣ STOCK & MOUVEMENTS
+/* =========================================================
+   6. STOCK
+========================================================= */
+
 CREATE TABLE lot (
-    id BIGSERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     numero_lot VARCHAR(100),
-    article_id BIGINT REFERENCES article(id),
+    article_id INT REFERENCES article(id),
     date_expiration DATE,
     quantite_disponible NUMERIC(15,2),
     statut VARCHAR(20)
 );
 
 CREATE TABLE type_mouvement (
-    id BIGSERIAL PRIMARY KEY,
-    code VARCHAR(50) UNIQUE NOT NULL
+    id SERIAL PRIMARY KEY,
+    code VARCHAR(50) NOT NULL UNIQUE
 );
 
 CREATE TABLE mouvement_stock (
-    id BIGSERIAL PRIMARY KEY,
-    date_heure TIMESTAMP,
-    utilisateur_id BIGINT REFERENCES utilisateur(id),
-    type_mouvement_id BIGINT REFERENCES type_mouvement(id),
-    article_id BIGINT REFERENCES article(id),
-    lot_id BIGINT REFERENCES lot(id),
+    id SERIAL PRIMARY KEY,
+    date_heure TIMESTAMP NOT NULL,
+    utilisateur_id INT REFERENCES utilisateur(id),
+    type_mouvement_id INT REFERENCES type_mouvement(id),
+    article_id INT REFERENCES article(id),
+    lot_id INT REFERENCES lot(id),
     quantite NUMERIC(15,2),
-    emplacement_source_id BIGINT REFERENCES emplacement(id),
-    emplacement_destination_id BIGINT REFERENCES emplacement(id)
+    emplacement_source_id INT REFERENCES emplacement(id),
+    emplacement_destination_id INT REFERENCES emplacement(id)
 );
 
--- 5️⃣ VENTES & FACTURATION (EXTRAIT)
-CREATE TABLE commande_client (
-    id BIGSERIAL PRIMARY KEY,
-    numero_commande VARCHAR(50) UNIQUE,
-    date_commande DATE,
-    depot_id BIGINT REFERENCES depot(id),
-    mode_paiement_id BIGINT
+/* =========================================================
+   7. VENTES
+========================================================= */
+
+CREATE TABLE proforma_client (
+    id SERIAL PRIMARY KEY,
+    numero_proforma VARCHAR(50) NOT NULL UNIQUE,
+    client_id INT REFERENCES client(id),
+    date DATE NOT NULL,
+    devise_id INT REFERENCES devise(id)
 );
+
+CREATE TABLE commande_client (
+    id SERIAL PRIMARY KEY,
+    numero_commande VARCHAR(50) NOT NULL UNIQUE,
+    proforma_client_id INT REFERENCES proforma_client(id),
+    date_commande DATE NOT NULL,
+    depot_id INT REFERENCES depot(id),
+    mode_paiement_id INT REFERENCES mode_paiement(id)
+);
+
+/* =========================================================
+   8. FACTURATION & PAIEMENTS
+========================================================= */
 
 CREATE TABLE facture_client (
-    id BIGSERIAL PRIMARY KEY,
-    numero_facture_client VARCHAR(50) UNIQUE,
-    date_facture DATE,
-    montant NUMERIC(15,2)
+    id SERIAL PRIMARY KEY,
+    numero_facture_client VARCHAR(50) NOT NULL UNIQUE,
+    date_facture DATE NOT NULL,
+    montant NUMERIC(15,2) NOT NULL
 );
 
+CREATE TABLE encaissement_client (
+    id SERIAL PRIMARY KEY,
+    numero_encaissement VARCHAR(50) NOT NULL UNIQUE,
+    facture_client_id INT REFERENCES facture_client(id),
+    date_encaissement DATE NOT NULL,
+    mode_paiement_id INT REFERENCES mode_paiement(id)
+);
