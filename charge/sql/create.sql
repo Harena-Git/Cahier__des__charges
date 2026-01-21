@@ -136,6 +136,13 @@ CREATE TABLE delegation_temporaire (
     date_fin DATE NOT NULL
 );
 
+CREATE TABLE utilisateur_applicatif (
+    id SERIAL PRIMARY KEY,
+    utilisateur_id INT NOT NULL REFERENCES utilisateur(id) UNIQUE,
+    profil_utilisateur_id INT NOT NULL REFERENCES profil_utilisateur(id),
+    mot_de_passe VARCHAR(255) NOT NULL
+);
+
 /* =========================================================
    4. RÉFÉRENTIELS MÉTIER
 ========================================================= */
