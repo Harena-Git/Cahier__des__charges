@@ -1,0 +1,34 @@
+Ny Voary :
+    - Frontend : TOUTES les pages (tous les acteurs, toutes les interfaces)
+    - Backend : Module ADMIN + CORE
+        - Acteurs concernés : ADMINISTRATEUR uniquement
+        - Pages à développer :
+            - Toute la partie Administration générale (utilisateurs, rôles, permissions, délégations)
+            - Gestion des utilisateurs, rôles, permissions
+            - Structure organisationnelle (sociétés, sites, dépôts, emplacements)
+            - Référentiels (articles, catégories, unités, taxes, tarifs, fournisseurs, clients)
+
+Vatosoa : Module ACHATS + DEMANDEUR + DIRECTION
+    - Acteurs concernés : Demandeur + Service Achats + Direction (partie BC)
+    - Pages à développer :
+        - Espace Demandeur : DA (création, liste, suivi)
+        - Espace Achats : Gestion DA, proformas fournisseurs, comparatifs, création BC, suivi BC
+        - Espace Direction : Approbation BC (UI simple)
+        - API Demandes d'Achat (DA)
+        - API Proformas fournisseurs
+        - API Bons de Commande (BC)
+        - API Approbations Direction
+        Services de workflow achat
+    - Processus métier complet : DA → Proforma → Comparatif → BC → Validation
+
+Tolotra : Module STOCK + VENTES + FINANCE
+    - Acteurs concernés : Service Ventes + Finance/Comptabilité
+    - Pages à développer :
+        - Espace Ventes : Proformas clients, commandes clients, préparation, BL, livraisons
+        - Espace Finance : Facturation (fournisseur/client), rapprochements, paiements, encaissements
+        - Espace Direction : Reporting consolidé, KPIs
+        - API Stock (réceptions, mouvements, inventaire)
+        - API Ventes (proformas clients, commandes, livraisons)
+        - API Finance (factures, paiements, rapprochements)
+        - Services de gestion stock + facturation
+    - Processus métier : Devis → Commande → Livraison → Facturation → Paiement

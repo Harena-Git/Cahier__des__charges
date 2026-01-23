@@ -1,0 +1,208 @@
+26/01/26 : FITSARANA
+
+Les acteurs : 
+    - Admin
+    - Finance et Comptabilité
+    - Stock
+    - Vente
+    - Achat
+    - Autres (les autres départements pour créer les requêtes des achats)
+
+Fonctionnalités par acteurs :
+    - Admin
+        Définir et assigner les rôles (RBAC).
+        Définir les règles d'accès (ABAC : par site, dépôt, plafond financier).
+        Configurer les paramètres généraux (taxes, unités, familles d'articles).
+        Consulter les journaux d'audit (logs de toutes les actions).
+
+    - Finance et Comptabilité
+        Rapprochement à 3 volets (3-way match) : Comparer BC / BR / Facture Fournisseur avant paiement.
+        Facturation Client : Générer les factures et les avoirs après livraison.
+        Valorisation et clôture mensuelle du stock : Geler les coûts, calculer les écarts.
+        Paiement des fournisseurs après validation du rapprochement.
+        Reporting financier : Écarts de marge, valeur du stock comptable, analyse des écarts.
+
+    - Stock
+        Réception : Enregistrer l'arrivée des marchandises, contrôler les quantités (vs BC), générer le Bon de Réception (BR).
+        Mise en stock : Ranger les articles aux emplacements désignés.
+        Préparation de commande (Picking) : Prélever les articles pour les livraisons clients selon les règles (FIFO/FEFO), scanner les lots.
+        Gestion des mouvements : Enregistrer les transferts entre dépôts, les consommations internes, les rebuts.
+        Exécution des inventaires : Physique, tournant ou annuel.
+        Bloquer les lots non conformes ou expirés.
+
+    - Vente
+        Création de devis (pro-forma) pour les clients.
+        Transformation du devis en commande client.
+        Gestion des remises dans la limite de son plafond automatique.
+        Demande de réservation de stock pour honorer la commande.
+        Demande d'expédition/livraison au service Stock une fois le stock réservé.
+        Demande d'annulation ou modification de commande (soumis à validation si engagé).
+        Suivi du portefeuille commandes : en cours, livrées, en retard.
+        Gestion des retours clients (initiation d'un avoir).
+
+    - Achat
+        Création de Demandes d'Achat (DA) ou réception des DA des autres services.
+        Validation hiérarchique des DA selon les seuils (N1, N2, N3).
+        Transformation d'une DA approuvée en Bon de Commande (BC) fournisseur.
+        Transmission du BC au fournisseur.
+        Suivi des commandes et relance des retards.
+        Réception des litiges fournisseurs (qualité, quantité) et coordination avec le Stock.
+
+Écrans : 
+    - ESPACE ADMIN
+        - Tableau de bord Admin : KPI par rôle / service 
+        - Gestion des rôles (RBAC) (Définition des rôles : "Magasinier", "Acheteur", etc.)
+        - Gestion des règles d'accès (ABAC) (Définition des règles par site, dépôt, plafond)
+        - Journal d'audit / Logs (Filtres par date, action, module)
+        - Configuration générale (Taxes, unités de mesure, familles d'articles, nomenclatures)
+        - Gestion des sites et dépôts (Création et paramétrage des emplacements physiques)
+
+    - ESPACE FINANCE & COMPTABILITÉ
+        - Tableau de bord Finance (KPI : écarts de marge, valeur stock, factures en retard)
+        - Rapprochement fournisseurs (3-way match)
+            Liste des factures fournisseurs à rapprocher
+            Détail d'une facture avec visualisation du BC et du BR
+            Interface de validation/rejet du rapprochement
+        - Facturation clients
+            Liste des livraisons à facturer
+            Générateur de factures et d'avoirs
+            Historique des factures clients
+        - Gestion des paiements
+            Planning des paiements fournisseurs (après validation)
+            Suivi des encaissements clients
+        - Valorisation et clôture du stock
+            Interface de clôture mensuelle
+            Visualisation des écarts de valorisation
+            Validation des ajustements de stock (demandés par le Stock)
+        - Reporting financier (États prédéfinis et analyse)
+        - Validation des exceptions (Interface listant les demandes de validation : remises importantes, ajustements majeurs)
+
+    - ESPACE STOCK
+        - Tableau de bord Stock (KPI : précision stock, productivité picking, lots à risque)
+        - Réception des marchandises
+            Liste des BC attendus
+            Interface de saisie de réception (scan BC, saisie quantités, lots, DLC)
+            Historique des réceptions
+        - Préparation de commandes (Picking)
+            Liste des commandes clients à préparer (avec priorité)
+            Fiche de picking détaillée (articles, emplacements, lots)
+        - Gestion des mouvements de stock
+            Transferts entre dépôts
+            Sorties pour consommation interne / rebut
+            Journal des mouvements (consultation)
+        - Gestion des inventaires
+            Planification des inventaires (tournant, annuel)
+            Fiche d'inventaire
+            Saisie des écarts et proposition d'ajustement
+        - Consultation du stock en temps réel
+            Recherche d'article par code/emplacement
+            Niveau de stock par dépôt, lot, statut (bloqué/libre)
+        - Gestion des lots et séries (Consultation, blocage manuel)
+
+    - ESPACE VENTE
+        - Tableau de bord Commercial (KPI : CA, commandes en cours, taux d'annulation)
+        - Gestion des clients (Fiche client, historique)
+        - Création et gestion des devis
+            Éditeur de devis
+            Liste et suivi des devis envoyés
+        - Gestion des commandes clients
+            Transformation devis → commande
+            Liste et suivi des commandes (statut : en attente, préparée, livrée)
+            Détail d'une commande
+        - Gestion des livraisons
+            Vue des commandes "prêtes à expédier"
+            Interface pour demander l'expédition au Stock
+        - Gestion des retours et avoirs (Création d'une demande d'avoir)
+        - Catalogue produits & tarifs (Vue commerciale consultative)
+
+    - ESPACE ACHAT
+        - Tableau de bord Achat (KPI : délais DA→BC, taux de réception conforme)
+        - Gestion des Demandes d'Achat (DA)
+            Création d'une DA
+            "Boîte de validation" : liste des DA à approuver (pour les N1/N2/N3)
+            Suivi de l'état des DA
+        - Gestion des fournisseurs (Fiche fournisseur, performance, contacts)
+        - Création et gestion des Bons de Commande (BC)
+            Transformation DA → BC
+            Éditeur de BC
+            Liste et suivi des BC envoyés (statut)
+        - Suivi des réceptions (Vue des BC livrés/partiellement livrés/en retard)
+        - Gestion des litiges fournisseurs (Création d'un ticket de non-conformité lié à une réception)
+        - Catalogue fournisseurs & prix (Négociation et paramétrage)
+
+
+
+ACHAT dans un systeme : 
+- service ou departement manao demande d'achat
+- mankany amin'ny service achat ilay demande
+- atao check ny magasin fa sao mbola ao anaty stock
+- raha non, dia mangataka proforma any amin'ny fournisseur (au moins telo)
+- rehefa azo ilay proformats dia manao triage (saisie anaty systeme) dia izay mora indrindra no raisin'ny système
+- izay vao mandeha ny approbations rehetra : présenténa any amin'ny departement finance hitenenana hoe misy fikasana hividy zavatra izay ity ny valeurs any. 
+Manana an'izany vola izany ve isika?
+- rehefa approved, izay vao miétablir ny atao hoe BC ny service achat
+- BC : acte irreversible (tsy azo annuléna)
+- Rehefa établi ilay BC dia asaina soniavin'ny signataire ao amin'ny société. En général roa eo ihany : na DG na DGA. na DAF.
+- Approbation signataire BC : manomboka ny achat
+- Lasa ilay BC (num, ref proforma, date, qntt, qlt, montant) any amin'ny fournisseur
+- Mitondra BL ny fournisseur eo amin'ny magasinier, rehefa tonga. Indraindray tonga dia miaraka amin'ny facture.
+- Mamoaka BR ny magasinier
+- Mety tsy hitovy ny BL ny BR.
+- Paiement : rehefa tonga ny facture dia iny no paiyéna.
+
+check stock - check finance - demande proforma - 
+
+VENTE : 
+- Check stock aloha hoe misy ve ilay zavatra angatahan'ilay olona
+- Demande de proforma no azo dia mamoaka proforma (misy validité satria possible efa lany ilay entana)
+- Miandry BC
+- Préparation entana sy BL dia mandefa facture
+
+STOCK : 
+- Mouvements rehetra : achat, vente, transfert, lot, emplacement, serie, reservation (nahazo BC dia efa reservéna ny stock)
+- Inventaire : écart et ajustement (iza no afaka? magasinier ve (non) fa sup hierarchique foanae).*
+- Contrainte : multisite (sady a/v/s) teorana samihafa
+- multidépot : tsy manana a/v fa s fotsiny
+- mutlientité : groupe de société fa manana s hiarahana na afaka mifanao transfert de s
+
+
+Accès temporaire : mandeha congé dia manao délégation ana fahefana
+Double validation : samy mivalidé ny magasinier sy ny responsable ny achat sy ny finance 
+
+
+
+METHODE DE GESTION DE STOCK (gestion de valeurs : en Ar na euro) : ohatrinona ny nididtra, nivoaka, ... 
+- CMUP
+(01/01) VU : 1000 , Qnt : 20, Valeur : 20 000
+(02/01) VU : 500, Qnt : 10, Valeur : 5 000
+
+Total : Qnt : 30
+
+- FIFO : 
+(01/01) 1000 | 20 | 20 000
+(02/01) 500 | 10 | 5 000
+(03/01) 
+
+Stock : 
+
+- LIFO
+(01/01) 1000 | 20 | 
+(02/01) 500 | 10 |
+(03/01) -15 
+
+Stock : 1000 | 15
+
+
+FEFO (gestion ana article fa tsy mety raha gestion ana valeur & par rapport amin'ny date d'expiration) : firy  no nivoaka, niditra...
+
+Justification ana méthode : Par rapport amin'ny nature ana produit, emplacement anaty depot, utilisation.
+
+
+
+PS : 
+- misy gestion ana avance/accompte amin'ny BC.
+- gestion de valeur. 
+- mitazona historique ana (tsy henoko ny tohiny).
+- ajanona ilay resaka gel de coût. 
+- ajanona ny inventaire tounrante na annuel fa notion fotsiny no ao.
+- fixation prix de vente : par rapport % marge PA (ohatra hoe 20% par rapport amin'ny PA ny PV), na overwrite (tonga dia définisséna degany fa tsy miankina tamin'ny nividianana azy).
