@@ -1,3 +1,4 @@
+Prendre sql/tables.sql
 🔹 RÉPARTITION DES TÂCHES – PROJET ACHAT / VENTE / STOCK (5 DÉVELOPPEURS)
 
 👤 Harena
