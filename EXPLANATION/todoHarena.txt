@@ -166,3 +166,8 @@ CREATE TABLE proforma_fournisseur (
 
 Client pour departement (DA) -> Reps Achat (Validation) check_stock() -> proforma -> Check minim -> 
 Bon Commande -> Bon de livraison -> Bon repection -> Facture.
+
+Creation table :
+niveaux utilisateur -> id - libelle - niveaux
+(1 : client, 2 : employer)
+integrer dans societe et departement
