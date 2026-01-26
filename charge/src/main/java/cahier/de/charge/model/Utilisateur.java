@@ -1,14 +1,30 @@
 package cahier.de.charge.model;
 
+import jakarta.persistence.*;
 import java.io.Serializable;
 
+@Entity
+@Table(name = "utilisateur")
 public class Utilisateur implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    
+    @Column(unique = true, nullable = false)
     private String email;
+    
+    @Column(nullable = false)
     private String nom;
+    
+    @Column(nullable = false)
     private String prenom;
+    
     private String telephone;
+    
+    @Column(name = "site_id")
     private Integer siteId;
+    
+    @Column(name = "mot_de_passe")
     private String motDePasse;
 
     public Utilisateur() {}
