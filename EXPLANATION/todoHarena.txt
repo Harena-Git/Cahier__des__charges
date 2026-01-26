@@ -163,3 +163,6 @@ CREATE TABLE proforma_fournisseur (
         - Pilotage
             - Tableau de bord direction
             - KPIs globaux
+
+Client pour departement (DA) -> Reps Achat (Validation) check_stock() -> proforma -> Check minim -> 
+Bon Commande -> Bon de livraison -> Bon repection -> Facture.
