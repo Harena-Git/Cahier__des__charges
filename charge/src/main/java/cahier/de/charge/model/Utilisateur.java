@@ -24,18 +24,22 @@ public class Utilisateur implements Serializable {
     @Column(name = "site_id")
     private Integer siteId;
     
+    @Column(name = "id_departement")
+    private Integer idDepartement;
+    
     @Column(name = "mot_de_passe")
     private String motDePasse;
 
     public Utilisateur() {}
 
-    public Utilisateur(Integer id, String email, String nom, String prenom, String telephone, Integer siteId, String motDePasse) {
+    public Utilisateur(Integer id, String email, String nom, String prenom, String telephone, Integer siteId, Integer idDepartement, String motDePasse) {
         this.id = id;
         this.email = email;
         this.nom = nom;
         this.prenom = prenom;
         this.telephone = telephone;
         this.siteId = siteId;
+        this.idDepartement = idDepartement;
         this.motDePasse = motDePasse;
     }
 
@@ -56,6 +60,9 @@ public class Utilisateur implements Serializable {
     
     public Integer getSiteId() { return siteId; }
     public void setSiteId(Integer siteId) { this.siteId = siteId; }
+    
+    public Integer getIdDepartement() { return idDepartement; }
+    public void setIdDepartement(Integer idDepartement) { this.idDepartement = idDepartement; }
     
     public String getMotDePasse() { return motDePasse; }
     public void setMotDePasse(String motDePasse) { this.motDePasse = motDePasse; }

@@ -50,7 +50,6 @@ CREATE TABLE site (
     ville VARCHAR(100),
     societe_id INTEGER REFERENCES societe(id) ON DELETE CASCADE
 );
-
 CREATE TABLE utilisateur (
     id SERIAL PRIMARY KEY,
     email VARCHAR(255) UNIQUE NOT NULL,
@@ -59,6 +58,7 @@ CREATE TABLE utilisateur (
     telephone VARCHAR(20),
     site_id INTEGER REFERENCES site(id) ON DELETE SET NULL
 );
+
 
 CREATE TABLE super_admin (
     id SERIAL PRIMARY KEY,

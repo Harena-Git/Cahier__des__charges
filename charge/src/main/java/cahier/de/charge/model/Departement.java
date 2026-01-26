@@ -1,9 +1,16 @@
 package cahier.de.charge.model;
 
+import jakarta.persistence.*;
 import java.io.Serializable;
 
+@Entity
+@Table(name = "departement")
 public class Departement implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    
+    @Column(nullable = false, unique = true)
     private String nom;
 
     public Departement() {}

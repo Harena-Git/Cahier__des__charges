@@ -2,8 +2,10 @@ package cahier.de.charge.controller;
 
 import cahier.de.charge.model.Utilisateur;
 import cahier.de.charge.model.SuperAdmin;
+import cahier.de.charge.model.Departement;
 import cahier.de.charge.service.UtilisateurServiceHarena;
 import cahier.de.charge.service.SuperAdminServiceHarena;
+import cahier.de.charge.service.DepartementServiceHarena;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +23,9 @@ public class AdminControllerHarena {
 
     @Autowired
     private SuperAdminServiceHarena superAdminService;
+
+    @Autowired
+    private DepartementServiceHarena departementService;
 
     @GetMapping("/dashboard")
     public String dashboard(Model model) {
@@ -40,6 +45,7 @@ public class AdminControllerHarena {
         
         model.addAttribute("superAdmin", superAdmin);
         model.addAttribute("utilisateurs", utilisateurService.findAll());
+        model.addAttribute("departements", departementService.findAll());
         return "admin/super-dashboard";
     }
 
@@ -55,6 +61,7 @@ public class AdminControllerHarena {
         }
         
         model.addAttribute("utilisateur", new Utilisateur());
+        model.addAttribute("departements", departementService.findAll());
         return "admin/create-user";
     }
 

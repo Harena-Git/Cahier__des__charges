@@ -253,6 +253,8 @@
                         <th>Prénom</th>
                         <th>Email</th>
                         <th>Téléphone</th>
+                        <th>Département</th>
+                        <th>Site</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -263,6 +265,8 @@
                         <td th:text="${utilisateur.prenom}">Prénom</td>
                         <td th:text="${utilisateur.email}">email@example.com</td>
                         <td th:text="${utilisateur.telephone}">0123456789</td>
+                        <td th:text="${utilisateur.idDepartement != null ? utilisateur.idDepartement : 'Non assigné'}">Département</td>
+                        <td th:text="${utilisateur.siteId != null ? utilisateur.siteId : 'Non assigné'}">Site</td>
                         <td>
                             <form th:action="@{/admin/delete-user/{id}(id=${utilisateur.id})}" method="post" style="display: inline;">
                                 <button type="submit" class="delete-btn" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')">Supprimer</button>
