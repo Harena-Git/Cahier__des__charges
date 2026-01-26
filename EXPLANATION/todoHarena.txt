@@ -1,0 +1,165 @@
+Tables :
+"societe"
+CREATE TABLE societe (
+    id SERIAL PRIMARY KEY,
+    raison_sociale VARCHAR(200) NOT NULL,
+    code VARCHAR(20) UNIQUE NOT NULL,
+    adresse TEXT,
+    ville VARCHAR(100)
+);
+
+"site"
+CREATE TABLE site (
+    id SERIAL PRIMARY KEY,
+    nom VARCHAR(100) NOT NULL,
+    code VARCHAR(20) UNIQUE NOT NULL,
+    adresse TEXT,
+    ville VARCHAR(100),
+    societe_id INTEGER REFERENCES societe(id) ON DELETE CASCADE
+);
+
+"depot"
+CREATE TABLE depot (
+    id SERIAL PRIMARY KEY,
+    nom VARCHAR(100) NOT NULL,
+    code VARCHAR(20) UNIQUE NOT NULL,
+    site_id INTEGER REFERENCES site(id) ON DELETE CASCADE
+);
+
+"emplacement"
+CREATE TABLE emplacement (
+    id SERIAL PRIMARY KEY,
+    code VARCHAR(50) NOT NULL,
+    depot_id INTEGER REFERENCES depot(id) ON DELETE CASCADE,
+    UNIQUE(depot_id, code)
+);
+
+
+"utilisateur"
+CREATE TABLE utilisateur (
+    id SERIAL PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    nom VARCHAR(100) NOT NULL,
+    prenom VARCHAR(100) NOT NULL,
+    telephone VARCHAR(20),
+    site_id INTEGER REFERENCES site(id) ON DELETE SET NULL
+);
+
+"role"
+CREATE TABLE role (
+    id SERIAL PRIMARY KEY,
+    code VARCHAR(50) UNIQUE NOT NULL,
+    nom VARCHAR(100) NOT NULL
+);
+
+"module"
+CREATE TABLE module (
+    id SERIAL PRIMARY KEY,
+    code VARCHAR(20) UNIQUE NOT NULL,
+    nom VARCHAR(100) NOT NULL
+);
+
+"fonctionnalite"
+CREATE TABLE fonctionnalite (
+    id SERIAL PRIMARY KEY,
+    module_id INTEGER REFERENCES module(id) ON DELETE CASCADE,
+    code VARCHAR(50) NOT NULL,
+    nom VARCHAR(100) NOT NULL,
+    UNIQUE(module_id, code)
+);
+
+"permission"
+CREATE TABLE permission (
+    id SERIAL PRIMARY KEY,
+    fonctionnalite_id INTEGER REFERENCES fonctionnalite(id) ON DELETE CASCADE,
+    code VARCHAR(50) NOT NULL,
+    nom VARCHAR(100) NOT NULL,
+    UNIQUE(fonctionnalite_id, code)
+);
+
+"role_permission"
+CREATE TABLE role_permission (
+    id SERIAL PRIMARY KEY,
+    role_id INTEGER REFERENCES role(id) ON DELETE CASCADE,
+    permission_id INTEGER REFERENCES permission(id) ON DELETE CASCADE,
+    UNIQUE(role_id, permission_id)
+);
+
+"utilisateur_depot"
+CREATE TABLE utilisateur_depot (
+    id SERIAL PRIMARY KEY,
+    utilisateur_id INTEGER REFERENCES utilisateur(id) ON DELETE CASCADE,
+    depot_id INTEGER REFERENCES depot(id) ON DELETE CASCADE,
+    role_id INTEGER REFERENCES role(id) ON DELETE CASCADE,
+    UNIQUE(utilisateur_id, depot_id, role_id)
+);
+
+"delegation_temporaire"
+CREATE TABLE delegation_temporaire (
+    id SERIAL PRIMARY KEY,
+    delegant_user_id INTEGER REFERENCES utilisateur(id) ON DELETE CASCADE,
+    delegataire_user_id INTEGER REFERENCES utilisateur(id) ON DELETE CASCADE,
+    role_id INTEGER REFERENCES role(id) ON DELETE CASCADE,
+    date_debut DATE NOT NULL,
+    date_fin DATE NOT NULL
+    -- CHECK (date_debut < date_fin) supprimé
+);
+
+"Accès lecture sur : demande_achat & proforma_fournisseur"
+CREATE TABLE demande_achat (
+    id SERIAL PRIMARY KEY,
+    numero_da VARCHAR(50) UNIQUE NOT NULL,
+    date_demande DATE NOT NULL DEFAULT CURRENT_DATE,
+    departement_id INTEGER REFERENCES departement(id) ON DELETE SET NULL,
+    site_id INTEGER REFERENCES site(id) ON DELETE SET NULL,
+    status VARCHAR(20) DEFAULT 'BROUILLON',
+    date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE proforma_fournisseur (
+    id SERIAL PRIMARY KEY,
+    fournisseur_id INTEGER REFERENCES fournisseur(id) ON DELETE CASCADE,
+    demande_achat_id INTEGER REFERENCES demande_achat(id) ON DELETE CASCADE,
+    numero_proforma VARCHAR(100) NOT NULL,
+    date_proforma DATE NOT NULL,
+    duree_validite INTEGER NOT NULL,
+    devise_id INTEGER REFERENCES devise(id),
+    date_reception TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-> Supe admin : connection -> check_connection();
+-> Create User -> Each User identified by departement
+-> Validation : 
+
+    - ADMINISTRATEUR
+        - Administration générale
+            - Tableau de bord Admin
+            - Gestion des utilisateurs
+            - Gestion des rôles
+            - Gestion des permissions
+            - Délégations temporaires (congé)
+    
+        - Structure organisationnelle
+            - Sociétés
+            - Sites
+            - Dépôts
+            - Emplacements
+    
+        - Référentiels
+            - Articles / Produits
+            - Catégories
+            - Unités
+            - Taxes
+            - Tarifs
+            - Fournisseurs
+            - Clients
+    
+
+    - DIRECTION
+        - Approbation
+            - Approbation BC
+            - Historique des décisions
+    
+        - Pilotage
+            - Tableau de bord direction
+            - KPIs globaux
