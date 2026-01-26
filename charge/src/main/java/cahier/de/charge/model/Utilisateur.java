@@ -9,16 +9,18 @@ public class Utilisateur implements Serializable {
     private String prenom;
     private String telephone;
     private Integer siteId;
+    private String motDePasse;
 
     public Utilisateur() {}
 
-    public Utilisateur(Integer id, String email, String nom, String prenom, String telephone, Integer siteId) {
+    public Utilisateur(Integer id, String email, String nom, String prenom, String telephone, Integer siteId, String motDePasse) {
         this.id = id;
         this.email = email;
         this.nom = nom;
         this.prenom = prenom;
         this.telephone = telephone;
         this.siteId = siteId;
+        this.motDePasse = motDePasse;
     }
 
     public Integer getId() { return id; }
@@ -38,4 +40,7 @@ public class Utilisateur implements Serializable {
     
     public Integer getSiteId() { return siteId; }
     public void setSiteId(Integer siteId) { this.siteId = siteId; }
+    
+    public String getMotDePasse() { return motDePasse; }
+    public void setMotDePasse(String motDePasse) { this.motDePasse = motDePasse; }
 }
