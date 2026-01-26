@@ -1,8 +1,25 @@
-lien : http://localhost:8080/auth/login
+[ERROR] COMPILATION ERROR :
+[INFO] -------------------------------------------------------------
+[ERROR] /D:/Cours/Gestion_Entreprise_Mr_Tovo/2026/Cahier_des_Charges/Cahier__des__charges/charge/src/main/java/cahier/de/charge/controller/HomeControllerHarena.java:[7,8] class HomeController is public, should be declared in a file named HomeController.java
+[INFO] 1 error
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  6.515 s
+[INFO] Finished at: 2026-01-26T17:13:54+03:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.14.1:compile (default-compile) on project charge: Compilation failure
+[ERROR] /D:/Cours/Gestion_Entreprise_Mr_Tovo/2026/Cahier_des_Charges/Cahier__des__charges/charge/src/main/java/cahier/de/charge/controller/HomeControllerHarena.java:[7,8] class HomeController is public, should be declared in a file named HomeController.java
+[ERROR]
+[ERROR] -> [Help 1]
+[ERROR]
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR]
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+'compile' is not recognized as an internal or external command,
+operable program or batch file.
 
-Erreur :
-"Whitelabel Error Page
-This application has no explicit mapping for /error, so you are seeing this as a fallback.
-
-Mon Jan 26 16:53:55 EAT 2026
-There was an unexpected error (type=Internal Server Error, status=500)"
+D:\Cours\Gestion_Entreprise_Mr_Tovo\2026\Cahier_des_Charges\Cahier__des__charges\charge>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion - Gestion d'Entreprise</title>
+    <title>Connexion Super Admin - Gestion d'Entreprise</title>
     <style>
         * {
             margin: 0;
@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -37,14 +37,14 @@
 
         .login-header h1 {
             color: #333;
-            font-size: 2rem;
+            font-size: 1.8rem;
             margin-bottom: 0.5rem;
             font-weight: 600;
         }
 
         .login-header p {
             color: #666;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
 
         .form-group {
@@ -71,15 +71,15 @@
 
         .form-group input:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: #ff6b6b;
             background-color: white;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
         }
 
         .login-btn {
             width: 100%;
             padding: 0.875rem;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
             color: white;
             border: none;
             border-radius: 8px;
@@ -92,7 +92,7 @@
 
         .login-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
         }
 
         .login-btn:active {
@@ -109,6 +109,23 @@
             font-size: 0.9rem;
         }
 
+        .back-link {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        .back-link a {
+            color: #ff6b6b;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .back-link a:hover {
+            color: #ee5a24;
+            text-decoration: underline;
+        }
+
         .footer-info {
             text-align: center;
             margin-top: 2rem;
@@ -121,7 +138,7 @@
             margin: 0 auto 1rem;
             width: 60px;
             height: 60px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -131,59 +148,45 @@
             font-weight: bold;
         }
 
-        .admin-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+        .warning-badge {
+            background: #ff6b6b;
             color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
-        }
-
-        .admin-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-left: 0.5rem;
         }
     </style>
 </head>
 <body>
     <div class="login-container">
-        <a href="/auth/super-admin/login" class="admin-btn">Admin</a>
         <div class="login-header">
-            <div class="icon">GE</div>
-            <h1>Connexion</h1>
-            <p>Gestion d'Entreprise</p>
+            <div class="icon">SA</div>
+            <h1>Super Admin</h1>
+            <p>Connexion Administrateur Système</p>
         </div>
 
         <div th:if="${error}" class="error-message" th:text="${error}"></div>
 
-        <form th:action="@{/auth/login}" th:object="${loginRequest}" method="post">
+        <form th:action="@{/auth/super-admin/login}" th:object="${superAdminLoginRequest}" method="post">
             <div class="form-group">
-                <label for="email">Email</label>
+                <label for="nom">Nom d'utilisateur</label>
                 <input 
-                    type="email" 
-                    id="email" 
-                    th:field="*{email}" 
-                    placeholder="exemple@email.com"
+                    type="text" 
+                    id="nom" 
+                    th:field="*{nom}" 
+                    placeholder="Entrez votre nom d'utilisateur"
                     required
-                    autocomplete="email"
+                    autocomplete="username"
                 >
             </div>
 
             <div class="form-group">
-                <label for="motDePasse">Mot de passe</label>
+                <label for="mdp">Mot de passe</label>
                 <input 
                     type="password" 
-                    id="motDePasse" 
-                    th:field="*{motDePasse}" 
+                    id="mdp" 
+                    th:field="*{mdp}" 
                     placeholder="Entrez votre mot de passe"
                     required
                     autocomplete="current-password"
@@ -193,15 +196,20 @@
             <button type="submit" class="login-btn">Se connecter</button>
         </form>
 
+        <div class="back-link">
+            <a href="/auth/login">← Retour à la connexion utilisateur</a>
+        </div>
+
         <div class="footer-info">
             <p>&copy; 2026 Gestion d'Entreprise. Tous droits réservés.</p>
+            <p>Accès réservé aux super administrateurs</p>
         </div>
     </div>
 
     <script>
         // Auto-focus sur le premier champ
         document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('email').focus();
+            document.getElementById('nom').focus();
         });
 
         // Animation de validation

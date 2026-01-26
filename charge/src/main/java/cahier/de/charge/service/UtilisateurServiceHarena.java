@@ -5,6 +5,7 @@ import cahier.de.charge.repository.UtilisateurRepositoryHarena;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -36,5 +37,13 @@ public class UtilisateurServiceHarena {
 
     public boolean existsByEmail(String email) {
         return utilisateurRepository.existsByEmail(email);
+    }
+
+    public List<Utilisateur> findAll() {
+        return utilisateurRepository.findAll();
+    }
+
+    public void deleteById(Integer id) {
+        utilisateurRepository.deleteById(id);
     }
 }

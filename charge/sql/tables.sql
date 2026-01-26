@@ -60,6 +60,12 @@ CREATE TABLE utilisateur (
     site_id INTEGER REFERENCES site(id) ON DELETE SET NULL
 );
 
+CREATE TABLE super_admin (
+    id SERIAL PRIMARY KEY,
+    nom VARCHAR(100) UNIQUE NOT NULL,
+    mdp VARCHAR(255) NOT NULL
+);
+
 CREATE TABLE fonctionnalite (
     id SERIAL PRIMARY KEY,
     module_id INTEGER REFERENCES module(id) ON DELETE CASCADE,
