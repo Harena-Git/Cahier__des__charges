@@ -57,6 +57,8 @@ Je vais répondre **strictement à partir du SQL que tu as fourni**, sans invent
 ---
 
 ## 👤 **Fenitra — Module DEMANDEUR + ACHATS**
+Achats (demande d’achat →pro-forma →   approbation → commande → réception → 
+facture fournisseur→ paiement) 
 
 👉 **Flux métier** : DA → Proforma → BC
 
