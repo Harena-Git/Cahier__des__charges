@@ -59,6 +59,13 @@ Je vais répondre **strictement à partir du SQL que tu as fourni**, sans invent
 ## 👤 **Fenitra — Module DEMANDEUR + ACHATS**
 Achats (demande d’achat →pro-forma →   approbation → commande → réception → 
 facture fournisseur→ paiement) 
+Achats 
+ Demandeur (DA) : créer DA, suivre, pas de validation, pas de commande 
+ Approbation. N1/N2/N3 : valider selon seuils (montant / catégorie / fournisseur) 
+ Finance : Confirmer la disponibilité des fonds 
+ Acheteur : transformer DA → BC, négocier, gérer fournisseurs 
+ Responsable achats : valider BC au-delà seuil, débloquer litiges 
+ DG ou DAF (signataires légaux) : Approuver le BC 
 
 👉 **Flux métier** : DA → Proforma → BC
 
